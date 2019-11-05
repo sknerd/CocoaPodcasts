@@ -27,7 +27,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         //temporary automatic search when launching the app
         searchBar(searchController.searchBar, textDidChange: "Brian Voong")
     }
-    
     //MARK:- Setup Work
     
     private func setupSearchBar() {
@@ -80,8 +79,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         let podcast = self.podcasts[indexPath.row]
         episodesController.podcast = podcast
         navigationController?.pushViewController(episodesController, animated: true)
-        
-        
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
