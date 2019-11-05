@@ -23,6 +23,9 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         
         setupSearchBar()
         setupTableView()
+        
+        //temporary automatic search when launching the app
+        searchBar(searchController.searchBar, textDidChange: "Brian Voong")
     }
     
     //MARK:- Setup Work
@@ -41,15 +44,34 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         tableView.register(nib, forCellReuseIdentifier: cellId)
     }
     
+    var timer: Timer?
+    
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        APIService.shared.fetchPodcast(searchText: searchText) { (podcasts) in
-            self.podcasts = podcasts
-            self.tableView.reloadData()
-        }
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+            APIService.shared.fetchPodcast(searchText: searchText) { (podcasts) in
+                self.podcasts = podcasts
+                self.tableView.reloadData()
+            }
+        })
     }
     
     //MARK:- UITableView
+    
+    
+    
+     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let activityIndicatorView = UIActivityIndicatorView(style: .large)
+        activityIndicatorView.color = .darkGray
+        activityIndicatorView.startAnimating()
+        return activityIndicatorView
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        
+        return podcasts.count > 0 ? 0 : 250
+    }
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -58,7 +80,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         let podcast = self.podcasts[indexPath.row]
         episodesController.podcast = podcast
         navigationController?.pushViewController(episodesController, animated: true)
-
+        
         
     }
     
