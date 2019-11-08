@@ -56,6 +56,8 @@ class PlayerDetailsView: UIView {
         player.play()
     }
     
+//    var player: AVPlayer!
+    
     let player: AVPlayer = {
         let avPlayer = AVPlayer()
         avPlayer.automaticallyWaitsToMinimizeStalling = false
@@ -141,6 +143,7 @@ class PlayerDetailsView: UIView {
             self.setupElapsedTime()
             return .success
         }
+        
         commandCenter.togglePlayPauseCommand.isEnabled = true
         commandCenter.togglePlayPauseCommand.addTarget { (_) -> MPRemoteCommandHandlerStatus in
             
@@ -148,7 +151,33 @@ class PlayerDetailsView: UIView {
             
             return .success
         }
+        
+        
+        //TODO: - Not working on iOS 13 because of the MPRemoteCommandCenter bug
+//        commandCenter.nextTrackCommand.addTarget(self, action: #selector(handleNextTrack))
+//        commandCenter.previousTrackCommand.addTarget(self, action: #selector(handlePreviousTrack))
+       
     }
+    
+//    var playlistEpisodes = [Episode]()
+    
+//    @objc fileprivate func handlePreviousTrack() {
+//        changeTrack(moveForward: false)
+//    }
+//
+//    @objc fileprivate func handleNextTrack() {
+//        changeTrack(moveForward: true)
+//    }
+//
+//    fileprivate func changeTrack(moveForward: Bool) {
+//        let offset = moveForward ? 1 : playlistEpisodes.count - 1
+//        if playlistEpisodes.count == 0 {return}
+//        let currentEpisodeIndex = playlistEpisodes.firstIndex { (episode) -> Bool in
+//            return self.episode.title == episode.title
+//        }
+//        guard let index = currentEpisodeIndex else {return}
+//        self.episode = playlistEpisodes[(index + offset) % playlistEpisodes.count]
+//    }
     
     fileprivate func setupElapsedTime() {
         
