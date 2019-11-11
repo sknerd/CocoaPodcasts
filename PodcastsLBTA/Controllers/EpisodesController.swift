@@ -122,6 +122,9 @@ class EpisodesController: UITableViewController {
             let episode = self.episodes[indexPath.row]
             UserDefaults.standard.downloadEpisode(episode: episode)
             self.tableView.reloadData()
+            
+            //download episode using Alamofire
+            APIService.shared.downloadEpisode(episode: episode)
         }
         contextItem.backgroundColor = .purple
         let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])

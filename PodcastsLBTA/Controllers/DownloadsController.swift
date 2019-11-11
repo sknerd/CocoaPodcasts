@@ -37,6 +37,25 @@ class DownloadsController: UITableViewController {
     
     //MARK:- UITableView
     
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Launch episode player")
+        let episode = self.episodes[indexPath.row]
+        
+        if episode.fileUrl != nil {
+            UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode)
+        } else {
+            let alertController = UIAlertController(title: "File URL not found", message: "Cannot find local file, play using stream URL insted", preferredStyle: .actionSheet)
+            
+            alertController.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
+                UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode)
+            }))
+            
+            alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+            
+            present(alertController, animated: true)
+        }
+    }
+    
     
     //TODO: Change downloading action from swipe to button
     

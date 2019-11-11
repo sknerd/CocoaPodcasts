@@ -9,7 +9,7 @@
 import UIKit
 
 class EpisodesCell: UITableViewCell {
-
+    
     var episode: Episode! {
         didSet {
             titleLabel.text = episode.title
@@ -18,9 +18,20 @@ class EpisodesCell: UITableViewCell {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "MMM dd, yyyy"
             pubDateLabel.text = dateFormatter.string(from: episode.pubDate)
-                        
+            
             let url = URL(string: episode.imageUrl?.toSecureHTTPS() ?? "")
             episodeImageView.sd_setImage(with: url)
+            
+            let downloadedEpisodes = UserDefaults.standard.downloadedEpisodes()
+            
+            if downloadedEpisodes.isEmpty {
+                downloadButton.isHidden = false
+            } else if downloadedEpisodes.contains(where: { $0.title == episode.title && $0.author == episode.author}) {
+                downloadButton.isHidden = true
+            } else {
+                downloadButton.isHidden = false
+                
+            }
         }
     }
     
@@ -34,5 +45,16 @@ class EpisodesCell: UITableViewCell {
     @IBOutlet weak var pubDateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    
+    @IBOutlet weak var downloadButton: UIButton!
+    
+    
+    @IBAction func handleDownload(_ sender: Any) {
+        
+        UserDefaults.standard.downloadEpisode(episode: episode)
+        downloadButton.isHidden = true
+        
+    }
+    
     
 }
