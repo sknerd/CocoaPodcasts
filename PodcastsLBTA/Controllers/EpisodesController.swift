@@ -114,6 +114,20 @@ class EpisodesController: UITableViewController {
     }
     
     //MARK:- UITableView
+        
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let contextItem = UIContextualAction(style: .normal, title: "Download") {  (contextualAction, view, boolValue) in
+            print("Downloading episode into UserDefaults...")
+            
+            let episode = self.episodes[indexPath.row]
+            UserDefaults.standard.downloadEpisode(episode: episode)
+            self.tableView.reloadData()
+        }
+        contextItem.backgroundColor = .purple
+        let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
+
+        return swipeActions
+    }
     
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let activityIndicatorView = UIActivityIndicatorView(style: .large)
