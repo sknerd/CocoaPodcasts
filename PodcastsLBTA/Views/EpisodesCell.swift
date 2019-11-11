@@ -45,14 +45,18 @@ class EpisodesCell: UITableViewCell {
     @IBOutlet weak var pubDateLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var progressLabel: UILabel!
     
     @IBOutlet weak var downloadButton: UIButton!
     
     
     @IBAction func handleDownload(_ sender: Any) {
         
+        
         UserDefaults.standard.downloadEpisode(episode: episode)
+        APIService.shared.downloadEpisode(episode: episode)
         downloadButton.isHidden = true
+        UIApplication.mainTabBarController()?.viewControllers?[2].tabBarItem.badgeValue = ""
         
     }
     

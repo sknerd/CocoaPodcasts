@@ -86,7 +86,7 @@ class EpisodesController: UITableViewController {
     }
     
     fileprivate func showBadgeHighlight() {
-        UIApplication.mainTabBarController()?.viewControllers?[1].tabBarItem.badgeValue = "New"
+        UIApplication.mainTabBarController()?.viewControllers?[1].tabBarItem.badgeValue = ""
     }
     
     @objc fileprivate func handleFetchSavedPodcasts() {
@@ -120,6 +120,7 @@ class EpisodesController: UITableViewController {
             print("Downloading episode into UserDefaults...")
             
             let episode = self.episodes[indexPath.row]
+            
             UserDefaults.standard.downloadEpisode(episode: episode)
             self.tableView.reloadData()
             
