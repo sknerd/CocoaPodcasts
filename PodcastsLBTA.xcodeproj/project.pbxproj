@@ -15,8 +15,11 @@
 		81170805236DBE4500BCBBEF /* PlayerDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81170804236DBE4500BCBBEF /* PlayerDetailsView.xib */; };
 		81170807236DC17400BCBBEF /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81170806236DC17400BCBBEF /* PlayerDetailsView.swift */; };
 		815C0CD8236F168300D201AB /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815C0CD7236F168300D201AB /* CMTime.swift */; };
+		816B0FAF237598E700C2511D /* FavouritePodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B0FAE237598E700C2511D /* FavouritePodcastCell.swift */; };
 		8172B6B32371A68800F3BCC6 /* PlayerDetailsView+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B6B22371A68800F3BCC6 /* PlayerDetailsView+Gestures.swift */; };
 		8172B6B52371AB2300F3BCC6 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B6B42371AB2300F3BCC6 /* UIApplication.swift */; };
+		81843B8C2376CB7200700798 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81843B8B2376CB7200700798 /* UserDefaults.swift */; };
+		8195C4EB237590CB0012A0F5 /* FavoritesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8195C4EA237590CB0012A0F5 /* FavoritesController.swift */; };
 		81D44FAC236B3020002345E5 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81D44FAB236B3020002345E5 /* APIService.swift */; };
 		81E21E99236C6E47002C44B9 /* PodcastCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81E21E98236C6E47002C44B9 /* PodcastCell.xib */; };
 		81E21E9B236C7067002C44B9 /* PodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E21E9A236C7067002C44B9 /* PodcastCell.swift */; };
@@ -44,8 +47,11 @@
 		81170804236DBE4500BCBBEF /* PlayerDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerDetailsView.xib; sourceTree = "<group>"; };
 		81170806236DC17400BCBBEF /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
 		815C0CD7236F168300D201AB /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
+		816B0FAE237598E700C2511D /* FavouritePodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePodcastCell.swift; sourceTree = "<group>"; };
 		8172B6B22371A68800F3BCC6 /* PlayerDetailsView+Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView+Gestures.swift"; sourceTree = "<group>"; };
 		8172B6B42371AB2300F3BCC6 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		81843B8B2376CB7200700798 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		8195C4EA237590CB0012A0F5 /* FavoritesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesController.swift; sourceTree = "<group>"; };
 		81D44FAB236B3020002345E5 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		81E21E98236C6E47002C44B9 /* PodcastCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PodcastCell.xib; sourceTree = "<group>"; };
 		81E21E9A236C7067002C44B9 /* PodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PodcastCell.swift; sourceTree = "<group>"; };
@@ -100,6 +106,7 @@
 				81170802236DA47A00BCBBEF /* RSSFeed.swift */,
 				815C0CD7236F168300D201AB /* CMTime.swift */,
 				8172B6B42371AB2300F3BCC6 /* UIApplication.swift */,
+				81843B8B2376CB7200700798 /* UserDefaults.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -122,6 +129,7 @@
 				81170804236DBE4500BCBBEF /* PlayerDetailsView.xib */,
 				81170806236DC17400BCBBEF /* PlayerDetailsView.swift */,
 				8172B6B22371A68800F3BCC6 /* PlayerDetailsView+Gestures.swift */,
+				816B0FAE237598E700C2511D /* FavouritePodcastCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -159,6 +167,7 @@
 				81EDADAB2369BDAF00734A61 /* Assets.xcassets */,
 				81EDADAD2369BDAF00734A61 /* LaunchScreen.storyboard */,
 				81EDADB02369BDAF00734A61 /* Info.plist */,
+				81EDADB62369BE3800734A61 /* MainTabBarController.swift */,
 			);
 			path = PodcastsLBTA;
 			sourceTree = "<group>";
@@ -166,9 +175,9 @@
 		81EDADBA2369E78300734A61 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				81EDADB62369BE3800734A61 /* MainTabBarController.swift */,
 				81EDADBB2369E7B200734A61 /* PodcastsSearchController.swift */,
 				81F5621D236C9C1000C70E77 /* EpisodesController.swift */,
+				8195C4EA237590CB0012A0F5 /* FavoritesController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -307,13 +316,16 @@
 				811707F6236D947700BCBBEF /* Episode.swift in Sources */,
 				811707FD236D956500BCBBEF /* EpisodesCell.swift in Sources */,
 				81170807236DC17400BCBBEF /* PlayerDetailsView.swift in Sources */,
+				816B0FAF237598E700C2511D /* FavouritePodcastCell.swift in Sources */,
 				81EDADA32369BDAE00734A61 /* AppDelegate.swift in Sources */,
 				81170801236DA36500BCBBEF /* String.swift in Sources */,
 				81EDADBF2369E86400734A61 /* Podcast.swift in Sources */,
 				81EDADB72369BE3800734A61 /* MainTabBarController.swift in Sources */,
+				8195C4EB237590CB0012A0F5 /* FavoritesController.swift in Sources */,
 				8172B6B52371AB2300F3BCC6 /* UIApplication.swift in Sources */,
 				81EDADB92369C0A400734A61 /* ViewController.swift in Sources */,
 				8172B6B32371A68800F3BCC6 /* PlayerDetailsView+Gestures.swift in Sources */,
+				81843B8C2376CB7200700798 /* UserDefaults.swift in Sources */,
 				81EDADA52369BDAE00734A61 /* SceneDelegate.swift in Sources */,
 				815C0CD8236F168300D201AB /* CMTime.swift in Sources */,
 				81F5621E236C9C1000C70E77 /* EpisodesController.swift in Sources */,

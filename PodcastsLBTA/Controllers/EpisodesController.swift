@@ -41,20 +41,81 @@ class EpisodesController: UITableViewController {
         super.viewDidLoad()
         
         setupTableView()
+        setupNavigationBarButtons()
         
     }
     
     //MARK:- Setup Work
     
-    private func setupTableView() {
+    fileprivate func setupNavigationBarButtons() {
+        
+        //check if we have already save this podcast as fav
+        
+        let savedPodcasts = UserDefaults.standard.savedPodcasts()
+        let hasFavorited = savedPodcasts.firstIndex(where: { $0.trackName == self.podcast?.trackName && $0.artistName == self.podcast?.artistName }) != nil
+        
+        if hasFavorited {
+            //setting up our heart icon
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: nil, action: nil)
+        } else {
+            navigationItem.rightBarButtonItems = [
+                UIBarButtonItem(title: "Favorite", style: .plain, target: self, action: #selector(handleSaveFavorite)),
+//                UIBarButtonItem(title: "Fetch", style: .plain, target: self, action: #selector(handleFetchSavedPodcasts))
+            ]
+        }
+    }
+    
+    @objc fileprivate func handleSaveFavorite() {
+        print("Saving into user defaults")
+        
+        guard let podcast = self.podcast else { return }
+        var listOfPodcasts = UserDefaults.standard.savedPodcasts()
+        
+        listOfPodcasts.append(podcast)
+        
+        //1. transform podcast into Data
+        do {
+            let data = try NSKeyedArchiver.archivedData(withRootObject: listOfPodcasts, requiringSecureCoding: false)
+            UserDefaults.standard.set(data, forKey: UserDefaults.favoritedPodcastKey)
+            UserDefaults.standard.synchronize()
+            showBadgeHighlight()
+            navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "heart.fill"), style: .plain, target: nil, action: nil)
+        } catch let err {
+            print("Failed to convert into Data:", err.localizedDescription)
+        }
+    }
+    
+    fileprivate func showBadgeHighlight() {
+        UIApplication.mainTabBarController()?.viewControllers?[1].tabBarItem.badgeValue = "New"
+    }
+    
+    @objc fileprivate func handleFetchSavedPodcasts() {
+        print("Handle fetching saved podcast from user defaults")
+        
+        //how to retrieve our Podcast object from User Defaults
+        
+        guard let data = UserDefaults.standard.data(forKey: UserDefaults.favoritedPodcastKey) else { return }
+        
+        do {
+            let savedPodcasts = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [Podcast]
+            
+            savedPodcasts?.forEach({ (podcast) in
+                print(podcast.trackName ?? "")
+            })
+        } catch let err {
+            print("Failed to transform from data", err)
+        }
+    }
+    
+    fileprivate func setupTableView() {
         let nib = UINib(nibName: "EpisodesCell", bundle: nil)
         tableView.register(nib, forCellReuseIdentifier: cellId)
         tableView.tableFooterView = UIView()
     }
-
+    
     //MARK:- UITableView
     
-     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let activityIndicatorView = UIActivityIndicatorView(style: .large)
         activityIndicatorView.color = .darkGray
         activityIndicatorView.startAnimating()
@@ -88,4 +149,4 @@ class EpisodesController: UITableViewController {
     }
     
 }
- 
+
