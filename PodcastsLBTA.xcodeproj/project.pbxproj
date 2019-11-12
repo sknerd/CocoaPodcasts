@@ -14,6 +14,7 @@
 		81170803236DA47A00BCBBEF /* RSSFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81170802236DA47A00BCBBEF /* RSSFeed.swift */; };
 		81170805236DBE4500BCBBEF /* PlayerDetailsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81170804236DBE4500BCBBEF /* PlayerDetailsView.xib */; };
 		81170807236DC17400BCBBEF /* PlayerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81170806236DC17400BCBBEF /* PlayerDetailsView.swift */; };
+		8143E5FD237B07E7002E84BE /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8143E5FC237B07E7002E84BE /* Utils.swift */; };
 		815C0CD8236F168300D201AB /* CMTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 815C0CD7236F168300D201AB /* CMTime.swift */; };
 		816B0FAF237598E700C2511D /* FavouritePodcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 816B0FAE237598E700C2511D /* FavouritePodcastCell.swift */; };
 		8172B6B32371A68800F3BCC6 /* PlayerDetailsView+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8172B6B22371A68800F3BCC6 /* PlayerDetailsView+Gestures.swift */; };
@@ -47,6 +48,7 @@
 		81170802236DA47A00BCBBEF /* RSSFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSSFeed.swift; sourceTree = "<group>"; };
 		81170804236DBE4500BCBBEF /* PlayerDetailsView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlayerDetailsView.xib; sourceTree = "<group>"; };
 		81170806236DC17400BCBBEF /* PlayerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDetailsView.swift; sourceTree = "<group>"; };
+		8143E5FC237B07E7002E84BE /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		815C0CD7236F168300D201AB /* CMTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTime.swift; sourceTree = "<group>"; };
 		816B0FAE237598E700C2511D /* FavouritePodcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouritePodcastCell.swift; sourceTree = "<group>"; };
 		8172B6B22371A68800F3BCC6 /* PlayerDetailsView+Gestures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerDetailsView+Gestures.swift"; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				815C0CD7236F168300D201AB /* CMTime.swift */,
 				8172B6B42371AB2300F3BCC6 /* UIApplication.swift */,
 				81843B8B2376CB7200700798 /* UserDefaults.swift */,
+				8143E5FC237B07E7002E84BE /* Utils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -169,7 +172,6 @@
 				81EDADAB2369BDAF00734A61 /* Assets.xcassets */,
 				81EDADAD2369BDAF00734A61 /* LaunchScreen.storyboard */,
 				81EDADB02369BDAF00734A61 /* Info.plist */,
-				81EDADB62369BE3800734A61 /* MainTabBarController.swift */,
 			);
 			path = PodcastsLBTA;
 			sourceTree = "<group>";
@@ -181,6 +183,7 @@
 				81F5621D236C9C1000C70E77 /* EpisodesController.swift */,
 				8195C4EA237590CB0012A0F5 /* FavoritesController.swift */,
 				81F34577237974FA00E217EB /* DownloadsController.swift */,
+				81EDADB62369BE3800734A61 /* MainTabBarController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -319,6 +322,7 @@
 				811707F6236D947700BCBBEF /* Episode.swift in Sources */,
 				811707FD236D956500BCBBEF /* EpisodesCell.swift in Sources */,
 				81170807236DC17400BCBBEF /* PlayerDetailsView.swift in Sources */,
+				8143E5FD237B07E7002E84BE /* Utils.swift in Sources */,
 				816B0FAF237598E700C2511D /* FavouritePodcastCell.swift in Sources */,
 				81EDADA32369BDAE00734A61 /* AppDelegate.swift in Sources */,
 				81170801236DA36500BCBBEF /* String.swift in Sources */,
@@ -484,7 +488,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.skner.renks.PodcastsLBTA;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skner.renks.Dopecast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -503,7 +507,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.skner.renks.PodcastsLBTA;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skner.renks.Dopecast;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

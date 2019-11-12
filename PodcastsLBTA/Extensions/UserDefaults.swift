@@ -30,7 +30,6 @@ extension UserDefaults {
         } catch let encodeErr {
             print("Failed to encode episode:", encodeErr)
         }
-        
     }
     
     func downloadedEpisodes() -> [Episode] {
@@ -70,7 +69,6 @@ extension UserDefaults {
         }
         return savedPodcastsList
     }
-    
     
     func deletePodcast(podcast: Podcast) {
         let podcasts = savedPodcasts()

@@ -22,7 +22,6 @@ class APIService {
     
     let baseItunesSearchUrl = "https://itunes.apple.com/search"
     
-    //singleton
     static let shared = APIService()
     
     func downloadEpisode(episode: Episode) {
@@ -33,8 +32,7 @@ class APIService {
         AF.download(episode.streamUrl, to: downloadRequest).downloadProgress { (progress) in
             print(progress.fractionCompleted)
             
-            //notify DownloadsController about my download progress
-            
+            //notifiying DownloadsController about my download progress
             NotificationCenter.default.post(name: .downloadProgress, object: nil, userInfo: ["title": episode.title, "progress": progress.fractionCompleted])
             
         }.response { (resp) in
@@ -44,8 +42,7 @@ class APIService {
             
             NotificationCenter.default.post(name: .downloadComplete, object: episodeDownloadComplete, userInfo: nil)
             
-            //update UserDefauls downloaded episodes with this temp file
-            
+            //updating UserDefauls downloaded episodes with this temp file
             var downloadedEpisodes = UserDefaults.standard.downloadedEpisodes()
             guard let index = downloadedEpisodes.firstIndex(where: { $0.title == episode.title && $0.author == episode.author }) else { return }
             downloadedEpisodes[index].fileUrl = resp.fileURL?.absoluteString ?? ""
@@ -58,6 +55,7 @@ class APIService {
             }
         }
     }
+    
     
     func fetchEpisodes(feedUrl: String, completionHandler: @escaping ([Episode]) -> ()) {
         let secureFeedUrl = feedUrl.contains("https") ? feedUrl : feedUrl.replacingOccurrences(of: "http", with: "https")

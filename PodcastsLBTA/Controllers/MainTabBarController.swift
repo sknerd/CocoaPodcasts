@@ -17,9 +17,7 @@ class MainTabBarController: UITabBarController {
         UINavigationBar.appearance().prefersLargeTitles = true
         
         tabBar.tintColor = .black
-        
         setupViewControllers()
-        
         setupPlayerDetailsView()
     }
     

@@ -32,7 +32,6 @@ class FavoritesController: UICollectionViewController, UICollectionViewDelegateF
         collectionView.backgroundColor = .white
         collectionView.register(FavouritePodcastCell.self, forCellWithReuseIdentifier: cellId)
         
-        
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress))
         collectionView.addGestureRecognizer(gesture)
     }
@@ -46,7 +45,6 @@ class FavoritesController: UICollectionViewController, UICollectionViewDelegateF
         alertController.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
             
             //removing podcast from favourites list and User Defaults
-            
             UserDefaults.standard.deletePodcast(podcast: self.podcasts[selectedIndexPath.item])
             self.podcasts.remove(at: selectedIndexPath.item)
             self.collectionView.deleteItems(at: [selectedIndexPath])
@@ -89,6 +87,4 @@ class FavoritesController: UICollectionViewController, UICollectionViewDelegateF
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
-    
-    
 }

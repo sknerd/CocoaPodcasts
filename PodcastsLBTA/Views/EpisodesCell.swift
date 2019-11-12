@@ -52,13 +52,10 @@ class EpisodesCell: UITableViewCell {
     
     @IBAction func handleDownload(_ sender: Any) {
         
-        
         UserDefaults.standard.downloadEpisode(episode: episode)
         APIService.shared.downloadEpisode(episode: episode)
         downloadButton.isHidden = true
         UIApplication.mainTabBarController()?.viewControllers?[2].tabBarItem.badgeValue = ""
         
     }
-    
-    
 }

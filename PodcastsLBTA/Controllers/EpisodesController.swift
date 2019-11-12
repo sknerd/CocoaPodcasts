@@ -14,7 +14,6 @@ class EpisodesController: UITableViewController {
     var podcast: Podcast? {
         didSet {
             navigationItem.title = podcast?.trackName
-            
             fetchEpisodes()
         }
     }
@@ -50,7 +49,6 @@ class EpisodesController: UITableViewController {
     fileprivate func setupNavigationBarButtons() {
         
         //check if we have already save this podcast as fav
-        
         let savedPodcasts = UserDefaults.standard.savedPodcasts()
         let hasFavorited = savedPodcasts.firstIndex(where: { $0.trackName == self.podcast?.trackName && $0.artistName == self.podcast?.artistName }) != nil
         
@@ -60,7 +58,6 @@ class EpisodesController: UITableViewController {
         } else {
             navigationItem.rightBarButtonItems = [
                 UIBarButtonItem(title: "Favorite", style: .plain, target: self, action: #selector(handleSaveFavorite)),
-//                UIBarButtonItem(title: "Fetch", style: .plain, target: self, action: #selector(handleFetchSavedPodcasts))
             ]
         }
     }
@@ -73,7 +70,7 @@ class EpisodesController: UITableViewController {
         
         listOfPodcasts.append(podcast)
         
-        //1. transform podcast into Data
+        //transform podcast into Data
         do {
             let data = try NSKeyedArchiver.archivedData(withRootObject: listOfPodcasts, requiringSecureCoding: false)
             UserDefaults.standard.set(data, forKey: UserDefaults.favoritedPodcastKey)
@@ -90,10 +87,9 @@ class EpisodesController: UITableViewController {
     }
     
     @objc fileprivate func handleFetchSavedPodcasts() {
-        print("Handle fetching saved podcast from user defaults")
+        print("Handle fetching saved podcast from UserDefaults")
         
-        //how to retrieve our Podcast object from User Defaults
-        
+        //retrieving our Podcast object from UserDefaults
         guard let data = UserDefaults.standard.data(forKey: UserDefaults.favoritedPodcastKey) else { return }
         
         do {
@@ -114,22 +110,27 @@ class EpisodesController: UITableViewController {
     }
     
     //MARK:- UITableView
-        
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.clearsSelectionOnViewWillAppear = true
+    }
+    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let contextItem = UIContextualAction(style: .normal, title: "Download") {  (contextualAction, view, boolValue) in
-            print("Downloading episode into UserDefaults...")
+            print("Downloading the episode into UserDefaults...")
             
             let episode = self.episodes[indexPath.row]
             
             UserDefaults.standard.downloadEpisode(episode: episode)
             self.tableView.reloadData()
             
-            //download episode using Alamofire
+            //downloading episode using Alamofire
             APIService.shared.downloadEpisode(episode: episode)
         }
-        contextItem.backgroundColor = .purple
+        contextItem.backgroundColor = .blue
         let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
-
+        
         return swipeActions
     }
     

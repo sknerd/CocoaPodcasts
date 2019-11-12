@@ -22,6 +22,7 @@ class PlayerDetailsView: UIView {
             setupNowPlayingInfo()
             
             setupAudioSession()
+            
             playEpisode()
             
             guard let url = URL(string: episode.imageUrl?.toSecureHTTPS() ?? "") else { return }
@@ -71,7 +72,7 @@ class PlayerDetailsView: UIView {
         let fileName = fileUrl.lastPathComponent
         
         trueLocation.appendPathComponent(fileName)
-        print("True location of episode:", trueLocation.absoluteString)
+        print("True location of the episode:", trueLocation.absoluteString)
         
         let playerItem = AVPlayerItem(url: trueLocation)
         player.replaceCurrentItem(with: playerItem)
@@ -90,7 +91,6 @@ class PlayerDetailsView: UIView {
             self?.currentTimeLabel.text = time.toDisplayString()
             let durationTime = self?.player.currentItem?.duration
             self?.durationLabel.text = durationTime?.toDisplayString()
-            
             self?.updateCurrentTimeSlider()
         }
     }
@@ -130,7 +130,6 @@ class PlayerDetailsView: UIView {
     }
     
     //setting audio session for background playback
-    
     fileprivate func setupAudioSession() {
         
         do {
@@ -215,8 +214,6 @@ class PlayerDetailsView: UIView {
         let time = CMTime(value: 1, timescale: 3)
         let times = [NSValue(time: time)]
         
-        //player has a reference to self
-        //self has a reference to player
         player.addBoundaryTimeObserver(forTimes: times, queue: .main) { [weak self] in
             print("Episode started playing")
             self?.enlargeEpisodeImageView()
@@ -261,12 +258,9 @@ class PlayerDetailsView: UIView {
         super.awakeFromNib()
         
         setupRemoteControll()
-        
         setupGestures()
         setupInterruptionObserver()
-        
         observePlayerCurrentTime()
-        
         observeBoundaryTime()
     }
     
@@ -284,7 +278,6 @@ class PlayerDetailsView: UIView {
     @IBOutlet weak var miniTitleLabel: UILabel!
     
     @IBOutlet weak var miniPlayPauseButton: UIButton!
-    
     @IBAction func miniPlayPauseButton(_ sender: UIButton) {
         handlePlayPause()
     }
@@ -343,13 +336,11 @@ class PlayerDetailsView: UIView {
     fileprivate func shrinkEpisodeImageView() {
         UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
             self.episodeImageView.transform = self.shrunkenTransform
-            
         }, completion: nil)
     }
     
     fileprivate func enlargeEpisodeImageView() {
         UIView.animate(withDuration: 0.75, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            
             self.episodeImageView.transform = .identity
         }, completion: nil)
     }

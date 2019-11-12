@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import FeedKit
 
 class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
@@ -24,8 +25,10 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         setupSearchBar()
         setupTableView()
         
+        
+        
         //temporary automatic search when launching the app
-        searchBar(searchController.searchBar, textDidChange: "Brian Voong")
+        //searchBar(searchController.searchBar, textDidChange: "RA")
     }
     //MARK:- Setup Work
     
@@ -35,6 +38,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
         navigationItem.hidesSearchBarWhenScrolling = false
         searchController.searchBar.delegate = self
         searchController.obscuresBackgroundDuringPresentation = false
+        
     }
     
     private func setupTableView() {
@@ -46,35 +50,25 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     var timer: Timer?
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
+                
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false, block: { (_) in
+            self.showSpinner()
             APIService.shared.fetchPodcast(searchText: searchText) { (podcasts) in
                 self.podcasts = podcasts
+                self.removeSpinner()
                 self.tableView.reloadData()
             }
         })
     }
     
     //MARK:- UITableView
-    
-    
-    
-     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let activityIndicatorView = UIActivityIndicatorView(style: .large)
-        activityIndicatorView.color = .darkGray
-        activityIndicatorView.startAnimating()
-        return activityIndicatorView
-    }
-    
-    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return podcasts.count > 0 ? 0 : 250
     }
     
-    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         let episodesController = EpisodesController()
         let podcast = self.podcasts[indexPath.row]
         episodesController.podcast = podcast
@@ -83,7 +77,7 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let label = UILabel()
-        label.text = "Please enter a Search Term"
+        label.text = "Search for something cool :)"
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         label.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
@@ -91,7 +85,6 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        //ternary operator
         return self.podcasts.count > 0 ? 0 : 250
     }
     
@@ -110,5 +103,4 @@ class PodcastsSearchController: UITableViewController, UISearchBarDelegate {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 132
     }
-    
 }

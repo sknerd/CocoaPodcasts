@@ -26,7 +26,6 @@ class DownloadsController: UITableViewController {
     
     fileprivate func setupObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadProgress), name: .downloadProgress, object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(handleDownloadComplete), name: .downloadComplete, object: nil)
     }
     
@@ -60,6 +59,8 @@ class DownloadsController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        self.clearsSelectionOnViewWillAppear = true
+        
         episodes = UserDefaults.standard.downloadedEpisodes()
         UIApplication.mainTabBarController()?.viewControllers?[2].tabBarItem.badgeValue = nil
         tableView.reloadData()
@@ -71,6 +72,8 @@ class DownloadsController: UITableViewController {
         tableView.register(nib, forCellReuseIdentifier: cellId)
     }
     
+    
+    
     //MARK:- UITableView
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -80,9 +83,9 @@ class DownloadsController: UITableViewController {
         if episode.fileUrl != nil {
             UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode)
         } else {
-            let alertController = UIAlertController(title: "File URL not found", message: "Cannot find local file, play using stream URL insted", preferredStyle: .actionSheet)
+            let alertController = UIAlertController(title: "File is not downloaded yet or corrupted", message: "Cannot find local file, please wait for download to finish or play using stream URL instead.", preferredStyle: .actionSheet)
             
-            alertController.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
+            alertController.addAction(UIAlertAction(title: "Play Stream", style: .default, handler: { (_) in
                 UIApplication.mainTabBarController()?.maximizePlayerDetails(episode: episode)
             }))
             
@@ -92,22 +95,31 @@ class DownloadsController: UITableViewController {
         }
     }
     
-    
-    //TODO: Change downloading action from swipe to button
-    
     override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-         let contextItem = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
-             print("Deleting episode frome UserDefaults...")
+        let contextItem = UIContextualAction(style: .destructive, title: "Delete") {  (contextualAction, view, boolValue) in
+            print("Deleting episode frome UserDefaults...")
             let episode = self.episodes[indexPath.row]
             
             UserDefaults.standard.deleteEpisode(episode: episode)
             self.episodes.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-         }
-         let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
-
-         return swipeActions
-     }
+            
+            guard var trueLocation = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else { return }
+            print(trueLocation)
+            guard let fileUrl = URL(string: episode.fileUrl ?? "") else { return }
+            let fileName = fileUrl.lastPathComponent
+            trueLocation.appendPathComponent(fileName)
+            
+            do {
+                try FileManager.default.removeItem(at: trueLocation)
+            } catch let err {
+                print("Failed to delete episode file from the folder:", err)
+            }
+        }
+        
+        let swipeActions = UISwipeActionsConfiguration(actions: [contextItem])
+        return swipeActions
+    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return episodes.count
@@ -117,13 +129,11 @@ class DownloadsController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! EpisodesCell
         
         cell.episode = self.episodes[indexPath.row]
-        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 132
     }
-    
 }
 
